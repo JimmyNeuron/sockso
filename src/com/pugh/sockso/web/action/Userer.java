@@ -270,12 +270,16 @@ public class Userer extends BaseAction {
             final String sql = " update users " +
                                " set email = ?, " +
                                    " pass = ? " +
+                                   " lastfm_user = ? " +
+                                   " lastfm_pass = ? " +
                                " where id = ? ";
             
             st = db.prepare( sql );
             st.setString( 1, req.getArgument("email") );
             st.setString( 2, Utils.md5(req.getArgument("pass1")) );
-            st.setInt( 3, user.getId() );
+            st.setString( 2, req.getArgument("lastfmuser") );
+            st.setString( 2, Utils.md5(req.getArgument("lastfmpass")) );
+            st.setInt( 5, user.getId() );
             st.execute();
             
         }

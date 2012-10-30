@@ -15,6 +15,7 @@ import com.pugh.sockso.music.scheduling.SchedulerRunner;
 import com.pugh.sockso.resources.Resources;
 import com.pugh.sockso.resources.Locale;
 import com.pugh.sockso.resources.LocaleFactory;
+import com.pugh.sockso.scrobbler.LastFmScrobbler;
 import com.pugh.sockso.web.Dispatcher;
 import com.pugh.sockso.web.IpFinder;
 import com.pugh.sockso.web.Server;
@@ -54,6 +55,7 @@ public class Main {
     private static Indexer indexer;
     private static SchedulerRunner sched;
     private static Injector injector;
+    private static LastFmScrobbler scrobbler;
 
     /**
      *  application entry point
@@ -231,6 +233,10 @@ public class Main {
 
         final IpFinder ipFinder = injector.getInstance( IpFinder.class );
         ipFinder.init();
+        
+        // Start Last.fm thread
+        scrobbler = injector.getInstance(LastFmScrobbler.class);
+        scrobbler.start();
 
         final int port = getSavedPort( p );
         final String protocol = getProtocol( options );

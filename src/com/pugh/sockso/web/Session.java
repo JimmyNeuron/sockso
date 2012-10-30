@@ -131,7 +131,7 @@ public class Session {
 
             final int sessId = fetchSessionId( req );
             final String sessCode = fetchSessionCode( req );
-            final String sql = " select u.id, u.name, u.email, u.is_admin " +
+            final String sql = " select u.id, u.name, u.email, u.is_admin, u.lastfm_user, u.lastfm_pass " +
                                " from users u " +
                                    " inner join sessions s " +
                                    " on s.user_id = u.id " +
@@ -153,7 +153,9 @@ public class Session {
                     rs.getString("email"),
                     sessId,
                     sessCode,
-                    rs.getBoolean("is_admin")
+                    rs.getBoolean("is_admin"),
+                    rs.getString("lastfm_user"),
+                    rs.getString("lastfm_pass")
                 );
             }
 

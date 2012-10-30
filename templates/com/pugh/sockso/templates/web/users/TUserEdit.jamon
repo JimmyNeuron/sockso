@@ -37,6 +37,12 @@
         <label for="email"><% locale.getString("www.label.passwordRepeat") %></label>
         <input type="password" name="pass2" />
 
+        <label for="lastfmuser"><% locale.getString("gui.label.lastfmUsername") %></label>
+        <input type="text" name="lastfmuser" value="<% user.getLastfmName() %>" />
+
+        <label for="lastfmuser"><% locale.getString("gui.label.lastfmPassword") %></label>
+        <input type="password" name="lastfmpass" />
+
         <input type="submit" class="submit" value="<% locale.getString("www.label.save") %>" />
 
     </fieldset>

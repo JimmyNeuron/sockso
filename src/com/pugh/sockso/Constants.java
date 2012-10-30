@@ -177,4 +177,16 @@ public class Constants {
     public static final String COMMUNITY_ENABLED = "community.enabled";
     public static final String COMMUNITY_PING_URL = "community.pingUrl";
 
+  //**********************************************************
+    //**********************************************************
+    //
+    //  LAST.FM
+    //
+    //**********************************************************
+    //**********************************************************
+    
+    public static final String LASTFM_KEY = "lastfm.key";
+    public static final String LASTFM_SECRET = "lastfm.secret";
+    public static final String LASTFM_USERNAME = "lastfm.username";
+    public static final String LASTFM_PASSWORD = "lastfm.password";
 }

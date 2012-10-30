@@ -58,6 +58,8 @@ public interface Tag {
     
     public int getTrackNumber();
     
+    public int getTrackLength();
+    
     /**
      * returns the album year
      *

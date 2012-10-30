@@ -303,6 +303,10 @@ public abstract class JDBCDatabase extends AbstractDatabase implements Database 
         update( "insert into properties ( name, value ) values ( '" +Constants.APP_CONFIRM_EXIT+ "', '" + Properties.YES + "' )" );
         update( "insert into properties ( name, value ) values ( '" +Constants.APP_START_MINIMIZED+ "', '" + Properties.NO + "' )" );
 
+        update( "insert into properties ( name, value ) values ( '" +Constants.LASTFM_KEY+ "', '457dba6ea55d766e65eacd28a927b273' )" );
+        update( "insert into properties ( name, value ) values ( '" +Constants.LASTFM_SECRET+ "', '610e2b9a553e39a8896a27c1130a523a' )" );
+        update( "insert into properties ( name, value ) values ( '" +Constants.LASTFM_USERNAME+ "', '' )" );
+        update( "insert into properties ( name, value ) values ( '" +Constants.LASTFM_PASSWORD+ "', '' )" );
     }
     
     /**
@@ -353,5 +357,24 @@ public abstract class JDBCDatabase extends AbstractDatabase implements Database 
 
     }
 
+    /**
+     * Creates the last.fm columns in users if they do not exist.
+     *
+     */
+    protected void checkLastfmColumnsExist() {
+    	try {
 
+            final String sql = " alter table users " +
+                               " add " +
+            		           "   (lastfm_user varchar(50) not null, " +
+                               "    lastfm_pass char(32) not null)";
+
+            update( sql );
+            
+        }
+
+        catch ( final SQLException e ) {
+            log.info( e.getMessage() );
+        }
+    }
 }

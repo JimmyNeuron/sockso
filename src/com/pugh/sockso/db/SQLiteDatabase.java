@@ -37,6 +37,7 @@ public class SQLiteDatabase extends JDBCDatabase {
             createStructure();
 
             checkUserIsActiveColumnExists();
+            checkLastfmColumnsExist();
 
         }
         
@@ -229,4 +230,20 @@ public class SQLiteDatabase extends JDBCDatabase {
 
     }
     
+    public void checkLastfmColumnsExist() {
+    	try {
+
+            final String sql = " alter table users " +
+                               " add " +
+            		           "   (lastfm_user text not null, " +
+                               "    lastfm_pass text not null)";
+
+            update( sql );
+            
+        }
+
+        catch ( final SQLException e ) {
+            log.info( e.getMessage() );
+        }
+    }
 }

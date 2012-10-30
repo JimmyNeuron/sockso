@@ -318,3 +318,10 @@ con.desc.rescanCollection=scan collection now
 #  misc messages
 #
 misc.msg.updateAvailable=There is a newer version of Sockso available (%1)
+
+#
+#  last.fm
+#
+gui.label.lastfmUsername=Last.fm username
+gui.label.lastfmPassword=Last.fm password
+gui.label.lastfmPasswordRepeat=Repeat Last.fm password

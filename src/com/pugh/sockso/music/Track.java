@@ -25,6 +25,7 @@ public class Track extends MusicItem {
     private final Album album;
     private final String path;
     private final int number;
+    private final int length;
     private final Date dateAdded;
     
     private int playCount = 0;
@@ -42,12 +43,13 @@ public class Track extends MusicItem {
      */
     
     public Track( final Artist artist, final Album album, final int id, final String name,
-                  final String path, final int number, final Date dateAdded ) {
+                  final String path, final int number, final int length, final Date dateAdded ) {
         super( MusicItem.TRACK, id, name );
         this.artist = artist;
         this.album = album;
         this.path = path;
         this.number = number;
+        this.length = length;
         this.dateAdded = dateAdded;
     }
 
@@ -55,6 +57,7 @@ public class Track extends MusicItem {
     public Album getAlbum() { return album; }
     public String getPath() { return path; }
     public int getNumber() { return number; }
+    public int getLength() { return length; }
     public int getPlayCount() { return playCount; }
     public Date getDateAdded() { return dateAdded; }
     
@@ -79,7 +82,7 @@ public class Track extends MusicItem {
         return new Track(
             artist, new Album( artist, rs.getInt("albumId"), rs.getString("albumName"), rs.getString("albumYear") ),
             rs.getInt("trackId"), rs.getString("trackName"), rs.getString("trackPath"),
-            rs.getInt("trackNo"), rs.getDate("dateAdded")
+            rs.getInt("trackNo"), rs.getInt("trackLength"), rs.getDate("dateAdded")
         );
 
     }
@@ -117,7 +120,7 @@ public class Track extends MusicItem {
         return " select ar.id as artistId, ar.name as artistName, " +
                " al.id as albumId, al.name as albumName, al.year as albumYear, " +
                " t.id as trackId, t.name as trackName, t.path as trackPath, " +
-               " t.track_no as trackNo, t.date_added as dateAdded ";
+               " t.track_no as trackNo, t.length as trackLength, t.date_added as dateAdded ";
     }
 
     /**

@@ -21,6 +21,7 @@ import com.pugh.sockso.music.indexing.TrackIndexer;
 import com.pugh.sockso.resources.FileResources;
 import com.pugh.sockso.resources.JarResources;
 import com.pugh.sockso.resources.Resources;
+import com.pugh.sockso.scrobbler.LastFmScrobbler;
 import com.pugh.sockso.web.action.AmazonCoverSearch;
 import com.pugh.sockso.web.action.CoverSearch;
 import com.pugh.sockso.web.HttpServer;

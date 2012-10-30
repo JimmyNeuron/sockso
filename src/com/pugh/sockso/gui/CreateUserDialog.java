@@ -42,8 +42,8 @@ public class CreateUserDialog extends JDialog {
     private final UsersPanel usersPanel;
     private final Locale locale;
     
-    private JTextField txtName, txtEmail;
-    private JPasswordField txtPass1, txtPass2;
+    private JTextField txtName, txtEmail, txtLastfmName;
+    private JPasswordField txtPass1, txtPass2, txtLastfmPass1, txtLastfmPass2;
     private JCheckBox isAdmin;
     
     @Inject
@@ -88,6 +88,9 @@ public class CreateUserDialog extends JDialog {
         txtPass2 = new JPasswordField();
         isAdmin = new JCheckBox();
         
+        txtLastfmName = new JTextField();
+        txtLastfmPass1 = new JPasswordField();
+        txtLastfmPass2 = new JPasswordField();
     }
     
     /**
@@ -114,6 +117,12 @@ public class CreateUserDialog extends JDialog {
         builder.append( locale.getString("gui.label.email"), txtEmail );
         builder.nextLine();
         builder.append( locale.getString("gui.label.isAdmin"), isAdmin );
+        builder.nextLine();
+        builder.append( locale.getString("gui.label.lastfmUsername"), txtLastfmName );
+        builder.nextLine();
+        builder.append( locale.getString("gui.label.lastfmPassword"), txtLastfmPass1 );
+        builder.nextLine();
+        builder.append( locale.getString("gui.label.lastfmPasswordRepeat"), txtLastfmPass2 );
         builder.nextLine();
 
         return builder.getPanel();
@@ -192,6 +201,10 @@ public class CreateUserDialog extends JDialog {
         if ( v.emailExists(txtEmail.getText()) )
             throw new ValidationException( locale.getString("gui.error.duplicateEmail") );
 
+        pass1 = new String( txtLastfmPass1.getPassword() );
+        pass2 = new String( txtLastfmPass2.getPassword() );
+        if ( !pass1.equals(pass2) )
+            throw new ValidationException( locale.getString("gui.error.passwordsDontMatch") );
     }
     
     /**
@@ -210,7 +223,9 @@ public class CreateUserDialog extends JDialog {
                 txtName.getText(),
                 new String(txtPass1.getPassword()),
                 txtEmail.getText(),
-                isAdmin.isSelected()
+                isAdmin.isSelected(),
+                txtLastfmName.getText(),
+                new String(txtLastfmPass1.getPassword())
             );
 
             newUser.save( db );

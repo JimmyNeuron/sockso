@@ -8,6 +8,8 @@ import com.pugh.sockso.music.Files;
 import com.pugh.sockso.music.Track;
 import com.pugh.sockso.music.encoders.Encoders;
 import com.pugh.sockso.music.encoders.BuiltinEncoder;
+import com.pugh.sockso.scrobbler.LastFmScrobblerData;
+import com.pugh.sockso.scrobbler.LastFmScrobblerQueue;
 import com.pugh.sockso.web.Response;
 import com.pugh.sockso.web.Request;
 import com.pugh.sockso.web.BadRequestException;
@@ -143,35 +145,11 @@ public class Streamer extends BaseAction {
     protected void logTrackPlayed( final Track track ) {
         
         log.debug( "Track: " + track.getPath() );
-        
-        PreparedStatement st = null;
-                
-        try {
 
-            final Database db = getDatabase();
-            final User user = getUser();
-            final String sql = " insert into play_log ( track_id, date_played, user_id ) " +
-                               " values ( ?, current_timestamp, ? ) ";
-            
-            st = db.prepare( sql );
-            st.setInt( 1, track.getId() );
-            
-            if ( user != null )
-                st.setInt( 2, user.getId() );
-            else
-                st.setNull( 2, Types.INTEGER );
+        final User user = getUser();
 
-            st.execute();
-
-        }
-
-        catch ( SQLException e ) {
-            log.error( e );
-        }
-
-        finally {
-            Utils.close( st );
-        }
+        // Prepare Last.fm submission object.            
+        LastFmScrobblerQueue.getSingletonObject().addPlay(user, track);
         
     }
 

@@ -21,6 +21,8 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import org.apache.log4j.Logger;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
 
 public abstract class AudioTag implements Tag {
 
@@ -31,12 +33,14 @@ public abstract class AudioTag implements Tag {
     protected String trackTitle = "";
     protected String albumYear = "";
     protected int trackNumber = 0;
+    protected int trackLength = 0;
     protected BufferedImage coverArt = null;
 
     public String getArtist() { return artistTitle; }
     public String getAlbum() { return albumTitle; }
     public String getTrack() { return trackTitle; }
     public int getTrackNumber() { return trackNumber; }
+    public int getTrackLength() { return trackLength; }
     public String getAlbumYear() { return albumYear; }
     public BufferedImage getCoverArt() { return coverArt; }
 
@@ -86,9 +90,28 @@ public abstract class AudioTag implements Tag {
         if ( tag.albumTitle.equals("") ) tag.albumTitle = guessAlbum( file );
         if ( tag.trackTitle.equals("") ) tag.trackTitle = guessTrack( file );
         if ( tag.trackNumber == 0 ) tag.setTrackNumber( guessTrackNumber(file) );
+        
+        // Set track length
+        tag.trackLength = getLength(file);
                 
         return tag;
         
+    }
+    
+    protected static int getLength(final File file)
+    {
+    	int trackLength = 0;
+    	
+    	try
+    	{
+			AudioFile f = AudioFileIO.read(file);
+			
+			trackLength = f.getAudioHeader().getTrackLength();
+    	}
+    	catch(Exception exc)
+    	{ }
+    	
+    	return trackLength;
     }
 
     /**

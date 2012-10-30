@@ -226,3 +226,10 @@ con.desc.delProperty':'verwijderd een eigenschap
 con.desc.version':'geeft huidige Sockso versie weer
 con.desc.rescanCollection':'start een scan van de collectie
 misc.msg.updateAvailable':'Er is een nieuwe versie van Sockso beschikbaar (%1)
+
+#
+#  last.fm
+#
+gui.label.lastfmUsername=Last.fm gebruikersnaam
+gui.label.lastfmPassword=Last.fm paswoord
+gui.label.lastfmPassword=Herhaal Last.fm paswoord

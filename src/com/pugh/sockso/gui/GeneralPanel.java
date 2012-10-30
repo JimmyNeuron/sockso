@@ -9,6 +9,7 @@ import com.pugh.sockso.db.DBExporter;
 import com.pugh.sockso.gui.action.RequestLogClear;
 import com.pugh.sockso.gui.action.RequestLogExport;
 import com.pugh.sockso.gui.action.RequestLogChangeListener;
+import com.pugh.sockso.gui.controls.PasswordOptionField;
 import com.pugh.sockso.gui.controls.UploadDirectoryOptionField;
 import com.pugh.sockso.gui.controls.NumberOptionField;
 import com.pugh.sockso.gui.controls.TextOptionField;
@@ -211,6 +212,12 @@ public class GeneralPanel extends JPanel implements RequestLogChangeListener {
         builder.append( locale.getString("gui.label.anonymousUploads"), new BooleanOptionField(p,"uploads.allowAnonymous") );
         builder.nextLine();
         builder.append( locale.getString("gui.label.uploadsDirectory"), new UploadDirectoryOptionField(parent,p,"uploads.collectionId",locale,db,cm) );
+        builder.nextLine();
+        
+        builder.appendSeparator( "Last.fm Scrobbling" );
+        builder.append( locale.getString("gui.label.lastfmUsername"), new TextOptionField(p,Constants.LASTFM_USERNAME) );
+        builder.nextLine();
+        builder.append( locale.getString("gui.label.lastfmPassword"), new PasswordOptionField(p,Constants.LASTFM_PASSWORD) );
         builder.nextLine();
 
         builder.appendSeparator( locale.getString("gui.label.general") );

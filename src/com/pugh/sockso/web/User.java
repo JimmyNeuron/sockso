@@ -23,7 +23,7 @@ public class User {
     private static final Logger log = Logger.getLogger( User.class );
     
     private final int sessionId;
-    private final String name, pass, email, sessionCode;
+    private final String name, pass, email, sessionCode, lastfmName, lastfmPass;
     private final boolean isAdmin;
 
     private boolean isActive;
@@ -35,25 +35,37 @@ public class User {
 
     }
     
+    public User( final String name, final String pass, final String email, final boolean isAdmin, final String lastfmName, final String lastfmPass ) {
+
+        this( -1, name, pass, email, -1, "", isAdmin, lastfmName, lastfmPass );
+
+    }
+    
     public User( final String name, final String pass, final String email, final boolean isAdmin ) {
 
-        this( -1, name, pass, email, -1, "", isAdmin );
+        this( -1, name, pass, email, -1, "", isAdmin, "", "" );
 
     }
     
     public User( final int id, final String name, final String email, final boolean isAdmin ) {
 
-        this( id, name, "", email, -1, "", isAdmin );
+        this( id, name, "", email, -1, "", isAdmin, "", "" );
+
+    }
+    
+    public User( final int id, final String name, final String email, final boolean isAdmin, final String lastfmName, final String lastfmPass ) {
+
+        this( id, name, "", email, -1, "", isAdmin, lastfmName, lastfmPass );
 
     }
 
     public User( final int id, final String name, final String pass, final String email ) {
 
-        this( id, name, pass, email, -1, "", false );
+        this( id, name, pass, email, -1, "", false, "", "" );
 
     }
 
-    public User( final int id, final String name, final String pass, final String email, final int sessionId, final String sessionCode, final boolean isAdmin ) {
+    public User( final int id, final String name, final String pass, final String email, final int sessionId, final String sessionCode, final boolean isAdmin, final String lastfmName, final String lastfmPass ) {
 
         this.id = id;
         this.name = name;
@@ -62,6 +74,8 @@ public class User {
         this.sessionId = sessionId;
         this.sessionCode = sessionCode;
         this.isAdmin = isAdmin;
+        this.lastfmName = lastfmName;
+        this.lastfmPass = lastfmPass;
 
         isActive = true;
 
@@ -116,6 +130,16 @@ public class User {
     public boolean isAdmin() {
         return isAdmin;
     }
+    
+    public String getLastfmName() {
+    	return lastfmName;
+    }
+    
+    public String getLastfmPass() {
+    	if(!Utils.isMD5(this.lastfmPass))
+    		return Utils.md5(this.lastfmPass);
+    	return lastfmPass;
+    }
 
     /**
      *  Saves a new user to the database
@@ -131,8 +155,8 @@ public class User {
 
         try {
 
-            String sql = " insert into users ( name, pass, email, date_created, is_admin, is_active ) " +
-                         " values ( ?, ?, ?, current_timestamp, ?, ? ) ";
+            String sql = " insert into users ( name, pass, email, date_created, is_admin, is_active, lastfm_user, lastfm_pass ) " +
+                         " values ( ?, ?, ?, current_timestamp, ?, ?, ?, ? ) ";
 
             st = db.prepare( sql );
             st.setString( 1, name );
@@ -140,6 +164,8 @@ public class User {
             st.setString( 3, email );
             st.setInt( 4, isAdmin ? 1 : 0 );
             st.setString( 5, isActive ? "1" : "0" );
+            st.setString( 6, lastfmName );
+            st.setString( 7, getLastfmPass() );
             st.executeUpdate();
             
             Utils.close( st );
@@ -182,7 +208,9 @@ public class User {
                                " set name = ?, " +
                                    " email = ?, " +
                                    " is_admin = ?, " +
-                                   " is_active = ? " +
+                                   " is_active = ?, " +
+                                   " lastfm_user = ?, " +
+                                   " lastfm_pass = ?, " +
                                " where id = ? ";
             
             st = db.prepare( sql );
@@ -190,7 +218,9 @@ public class User {
             st.setString( 2, getEmail() );
             st.setInt( 3, isAdmin() ? 1 : 0 );
             st.setString( 4, isActive() ? "1" : "0" );
-            st.setInt( 5, getId() );
+            st.setString( 5, getLastfmName() );
+            st.setString( 6, getLastfmPass() );
+            st.setInt( 7, getId() );
 
             log.debug( "Update user [" +getId()+ "]: " + sql );
             log.debug( "Name: " +getName() );
@@ -218,7 +248,7 @@ public class User {
      */
     public static User find( final Database db, final int id ) {
 
-        final String sql = " select id, name, email, is_admin, is_active " +
+        final String sql = " select id, name, email, is_admin, is_active, lastfm_user, lastfm_pass " +
                            " from users " +
                            " where id = ? ";
 
@@ -236,7 +266,9 @@ public class User {
                     id,
                     rs.getString( "name" ),
                     rs.getString( "email" ),
-                    rs.getBoolean( "is_admin" )
+                    rs.getBoolean( "is_admin" ),
+                    rs.getString( "lastfm_user" ),
+                    rs.getString( "lastfm_pass" )
                 );
                 user.setActive( rs.getString("is_active").equals("1") );
                 return user;

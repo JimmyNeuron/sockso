@@ -2,3 +2,6 @@ See the Sockso website for information about developing Sockso.
 
 http://sockso.pu-gh.com
 
+This sockso fork adds realtime support for scrobbling tracks on Last.fm ("now playiong" + scrobbling)
+The communication with Last.fm is handled by Janni Kovacs' open source project lastfm-java (http://www.u-mass.de/lastfm).
+This fork also adds an implementation to calculate track lengths in sockso using the already installed library jaudiotagger.

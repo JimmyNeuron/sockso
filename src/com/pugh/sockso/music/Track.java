@@ -15,17 +15,18 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+// import org.apache.log4j.Logger;
 
 public class Track extends MusicItem {
 
-    private static final Logger log = Logger.getLogger( Track.class );
+    // private static final Logger log = Logger.getLogger( Track.class );
     
     private final Artist artist;
     private final Album album;
     private final String path;
     private final int number;
     private final int length;
+    private final String mbTrackId;
     private final Date dateAdded;
     
     private int playCount = 0;
@@ -43,13 +44,14 @@ public class Track extends MusicItem {
      */
     
     public Track( final Artist artist, final Album album, final int id, final String name,
-                  final String path, final int number, final int length, final Date dateAdded ) {
+                  final String path, final int number, final int length, final String mbTrackId, final Date dateAdded ) {
         super( MusicItem.TRACK, id, name );
         this.artist = artist;
         this.album = album;
         this.path = path;
         this.number = number;
         this.length = length;
+        this.mbTrackId = mbTrackId;
         this.dateAdded = dateAdded;
     }
 
@@ -58,6 +60,7 @@ public class Track extends MusicItem {
     public String getPath() { return path; }
     public int getNumber() { return number; }
     public int getLength() { return length; }
+    public String getMBTrackId() { return mbTrackId; }
     public int getPlayCount() { return playCount; }
     public Date getDateAdded() { return dateAdded; }
     
@@ -82,7 +85,7 @@ public class Track extends MusicItem {
         return new Track(
             artist, new Album( artist, rs.getInt("albumId"), rs.getString("albumName"), rs.getString("albumYear") ),
             rs.getInt("trackId"), rs.getString("trackName"), rs.getString("trackPath"),
-            rs.getInt("trackNo"), rs.getInt("trackLength"), rs.getDate("dateAdded")
+            rs.getInt("trackNo"), rs.getInt("trackLength"), rs.getString("mbTrackId"), rs.getDate("dateAdded")
         );
 
     }
@@ -120,7 +123,8 @@ public class Track extends MusicItem {
         return " select ar.id as artistId, ar.name as artistName, " +
                " al.id as albumId, al.name as albumName, al.year as albumYear, " +
                " t.id as trackId, t.name as trackName, t.path as trackPath, " +
-               " t.track_no as trackNo, t.length as trackLength, t.date_added as dateAdded ";
+               " t.track_no as trackNo, t.length as trackLength, t.mbtrackid as mbTrackId, " +
+               " t.date_added as dateAdded ";
     }
 
     /**

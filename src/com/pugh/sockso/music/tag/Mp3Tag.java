@@ -9,9 +9,15 @@ package com.pugh.sockso.music.tag;
 import java.io.File;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.mp3.MP3File;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.TagField;
 import org.jaudiotagger.tag.datatype.Artwork;
+import org.jaudiotagger.tag.id3.AbstractID3v2Frame;
 import org.jaudiotagger.tag.id3.ID3v1Tag;
 import org.jaudiotagger.tag.id3.ID3v24Frames;
 import org.jaudiotagger.tag.id3.ID3v24Tag;
@@ -62,7 +68,26 @@ public class Mp3Tag extends AudioTag {
                 // TODO log warning/error
             }
         }
-
+        
+        try
+        {
+        	// Meh :s
+	        List<TagField> tagList = v2tag.getFields(ID3v24Frames.FRAME_ID_USER_DEFINED_INFO);
+	        Iterator<TagField> it = tagList.iterator();
+	        while(it.hasNext())
+	        {
+	        	AbstractID3v2Frame field = (AbstractID3v2Frame) it.next();
+	        	if(field.getBody().getBriefDescription().contains("MUSICBRAINZ_TRACKID"))
+	        	{
+	        		mbTrackId = field.getBody().getUserFriendlyValue();
+	        		break;
+	        	}
+	        }
+        }
+        catch(Exception exc)
+        {
+        	mbTrackId = "";
+        }
     }
 
     private void parseID3v1Tag(MP3File f) {
@@ -94,6 +119,8 @@ public class Mp3Tag extends AudioTag {
                     }
                 }
             }
+            if ( mbTrackId.equals( "" ) )
+            	mbTrackId = tag.getFirst(FieldKey.MUSICBRAINZ_TRACK_ID);
         } catch ( final Exception e ) {}
 
     }

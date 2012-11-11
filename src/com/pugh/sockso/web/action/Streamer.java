@@ -146,11 +146,36 @@ public class Streamer extends BaseAction {
         
         log.debug( "Track: " + track.getPath() );
 
-        final User user = getUser();
+        PreparedStatement st = null;
 
-        // Prepare Last.fm submission object.            
-        LastFmScrobblerQueue.getSingletonObject().addPlay(user, track);
-        
+        try {
+
+            final Database db = getDatabase();
+            final User user = getUser();
+            final String sql = " insert into play_log ( track_id, date_played, user_id ) " +
+                               " values ( ?, current_timestamp, ? ) ";
+
+            st = db.prepare( sql );
+            st.setInt( 1, track.getId() );
+
+            if ( user != null )
+                st.setInt( 2, user.getId() );
+            else
+                st.setNull( 2, Types.INTEGER );
+
+            st.execute();
+
+            // Prepare Last.fm submission object.
+            LastFmScrobblerQueue.getSingletonObject().addPlay(user, track);
+        }
+
+        catch ( SQLException e ) {
+            log.error( e );
+        }
+
+        finally {
+            Utils.close( st );
+        }
     }
 
     /**

@@ -138,7 +138,7 @@ public class MusicSearch {
                 final Track track = new Track(
                     new Artist( rs.getInt("artist_id"), rs.getString("artist_name") ),
                     new Album( null, rs.getInt("album_id"), rs.getString("album_name"), "" ),
-                    rs.getInt("id"), rs.getString("name"), "", -1, 0, null
+                    rs.getInt("id"), rs.getString("name"), "", -1, 0, null, null
                 );
                 items.addElement( track );
             }

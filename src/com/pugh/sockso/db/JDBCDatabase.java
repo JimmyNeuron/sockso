@@ -377,4 +377,24 @@ public abstract class JDBCDatabase extends AbstractDatabase implements Database 
             log.info( e.getMessage() );
         }
     }
+    
+    /**
+     * Adds Musicbrainz track id to tracks table.
+     *
+     */
+    protected void checkMbTrackIdColumnExist() {
+    	try {
+
+            final String sql = " alter table tracks " +
+                               " add " +
+            		           "   (mbtrackid varchar(36) not null)";
+
+            update( sql );
+            
+        }
+
+        catch ( final SQLException e ) {
+            log.info( e.getMessage() );
+        }
+    }
 }

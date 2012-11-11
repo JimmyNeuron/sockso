@@ -1,12 +1,12 @@
 package com.pugh.sockso.scrobbler;
 
-import org.apache.log4j.Logger;
+// import org.apache.log4j.Logger;
 
 import de.umass.lastfm.scrobble.ScrobbleData;
 
 public class LastFmScrobblerData
 {
-	private static Logger log = Logger.getLogger(LastFmScrobblerData.class);
+	// private static Logger log = Logger.getLogger(LastFmScrobblerData.class);
 	
 	public static enum State { NOTIFY, SUBMIT, IDLE };
 	
@@ -18,7 +18,7 @@ public class LastFmScrobblerData
 	public State state;
 	public ScrobbleData scrobbleData;
 	
-	public LastFmScrobblerData(String username, String md5Pass, String artist, String trackName, String album, int trackNbr, int trackLength) throws Exception
+	public LastFmScrobblerData(String username, String md5Pass, String artist, String trackName, String album, int trackNbr, int trackLength, String mbTrackId) throws Exception
 	{
 		if(trackLength == 0 ||
 				   username == null || md5Pass == null ||
@@ -59,7 +59,7 @@ public class LastFmScrobblerData
                 trackLength,
                 album,
                 null,
-                null, // MusicBrainz track id
+                (mbTrackId != null && !mbTrackId.isEmpty() ? mbTrackId : null),
                 trackNbr,
                 null);
 	}

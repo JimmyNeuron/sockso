@@ -58,7 +58,23 @@ public interface Tag {
     
     public int getTrackNumber();
     
+    /**
+     * returns the track length
+     * 
+     * @return
+     * 
+     */
+    
     public int getTrackLength();
+    
+    /**
+     * returns the Musicbrainz track id
+     * 
+     * @return
+     * 
+     */
+    
+    public String getMBTrackId();
     
     /**
      * returns the album year

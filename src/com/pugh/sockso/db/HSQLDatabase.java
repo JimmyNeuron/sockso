@@ -127,7 +127,7 @@ public class HSQLDatabase extends JDBCDatabase {
         checkUserIsActiveColumnExists();
         checkAlbumYearColumnExists();
         checkLastfmColumnsExist();
-
+        checkMbTrackIdColumnExist();
     }
     
     /**

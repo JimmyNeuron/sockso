@@ -154,7 +154,7 @@ public class DBCollectionManager extends Thread implements CollectionManager, In
 
         final int artistId = addArtist( tag.getArtist() );
         final int albumId = addAlbum( artistId, tag.getAlbum(), tag.getAlbumYear() );
-        final int trackId = addTrack( artistId, albumId, tag.getTrack(), tag.getTrackNumber(), tag.getTrackLength(), file, collectionId );
+        final int trackId = addTrack( artistId, albumId, tag.getTrack(), tag.getTrackNumber(), tag.getTrackLength(), tag.getMBTrackId(), file, collectionId );
 
         if ( Utils.isFeatureEnabled( p, Constants.COLLMAN_SCAN_COVERS ) ) {
             final BufferedImage coverArt = tag.getCoverArt();
@@ -813,7 +813,7 @@ public class DBCollectionManager extends Thread implements CollectionManager, In
      *
      */
     
-    private int addTrack( final int artistId, final int albumId, String name, final int trackNo, final int trackLength, final File file, final int collectionId ) {
+    private int addTrack( final int artistId, final int albumId, String name, final int trackNo, final int trackLength, final String mbTrackId, final File file, final int collectionId ) {
 
         if ( name.equals("") )
             name = "Unknown Track (" + trackNo + ")";
@@ -826,8 +826,8 @@ public class DBCollectionManager extends Thread implements CollectionManager, In
             try {
 
                 final String sql = " insert into tracks ( artist_id, album_id, name, path, " +
-                        " length, collection_id, date_added, track_no ) " +
-                    " values ( ?, ?, ?, ?, ?, ?, current_timestamp, ? ) ";
+                        " length, mbtrackid, collection_id, date_added, track_no ) " +
+                    " values ( ?, ?, ?, ?, ?, ?, ?, current_timestamp, ? ) ";
                 
                 st = db.prepare( sql );
                 st.setInt( 1, artistId );
@@ -835,8 +835,9 @@ public class DBCollectionManager extends Thread implements CollectionManager, In
                 st.setString( 3, name );
                 st.setString( 4, file.getAbsolutePath() );
                 st.setInt( 5, trackLength );
-                st.setInt( 6, collectionId );
-                st.setInt( 7, trackNo );
+                st.setString(6, mbTrackId);
+                st.setInt( 7, collectionId );
+                st.setInt( 8, trackNo );
                 st.execute();
                 
                 log.debug( "Added Track: " + name );

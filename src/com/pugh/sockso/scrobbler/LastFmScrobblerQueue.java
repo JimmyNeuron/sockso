@@ -39,7 +39,8 @@ public class LastFmScrobblerQueue
 					              track.getName(),
 					              track.getAlbum().getName(),
 					              track.getNumber(),
-					              track.getLength()));
+					              track.getLength(),
+					              track.getMBTrackId()));
 		}
 		catch(Exception exc)
 		{

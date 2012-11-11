@@ -192,7 +192,13 @@ public class LastFmScrobbler extends Thread implements PropertiesListener
 					
 					if(scrobbleRequest.state == LastFmScrobblerData.State.NOTIFY)
 					{
-						log.debug("Sending now playiong update to Last.fm for user " + scrobbleRequest.username + " with track " + scrobbleRequest.scrobbleData.getArtist() + " - " + scrobbleRequest.scrobbleData.getTrack());
+						log.debug("Sending now playing update to Last.fm for user " + scrobbleRequest.username + " with\n" +
+					              "artist " + scrobbleRequest.scrobbleData.getArtist() + "\n" +
+					              "track " + scrobbleRequest.scrobbleData.getTrack()  + "\n" +
+					              "album " + scrobbleRequest.scrobbleData.getAlbum()  + "\n" +
+					              "track length " + scrobbleRequest.scrobbleData.getDuration()  + "\n" +
+					              "track number " + scrobbleRequest.scrobbleData.getTrackNumber()  + "\n" +
+					              "mb track id " + scrobbleRequest.scrobbleData.getMusicBrainzId()  + "\n");
 						updateNowPlaying(scrobbleRequest, session);
 						scrobbleRequest.state = LastFmScrobblerData.State.SUBMIT;
 					}

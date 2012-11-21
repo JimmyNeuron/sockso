@@ -72,6 +72,7 @@ www.link.folders=Folders
 www.link.playRandom=Play Randomly
 www.link.editUser=Edit
 www.link.scrobbleLog=Scrobble Log
+www.link.stats=Stats
 
 #
 #  web titles

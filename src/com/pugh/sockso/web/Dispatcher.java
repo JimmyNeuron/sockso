@@ -38,6 +38,7 @@ import com.pugh.sockso.web.action.browse.Latester;
 import com.pugh.sockso.web.action.browse.Playlister;
 import com.pugh.sockso.web.action.browse.Playlistser;
 import com.pugh.sockso.web.action.browse.Popularer;
+import com.pugh.sockso.web.action.browse.Statser;
 
 import com.pugh.sockso.web.action.playlist.M3uer;
 import com.pugh.sockso.web.action.playlist.Plser;
@@ -217,6 +218,9 @@ public class Dispatcher {
 
         else if ( command.equals("playlist"))
             return injector.getInstance( Playlister.class );
+        
+        else if ( command.equals("stats"))
+            return injector.getInstance( Statser.class );
 
         else return null;
         

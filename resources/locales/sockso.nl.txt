@@ -57,6 +57,7 @@ www.link.folders':'Mappen
 www.link.playRandom':'Willekeurig afspelen
 www.link.editUser':'Bewerken
 www.link.scrobbleLog':'Scrobble Log
+www.link.stats':'Stats
 www.title.playlist':'Afspeellijst
 www.title.recentlyPlayedTracks':'Recent beluisterde nummers
 www.title.topArtists':'Top Artiesten

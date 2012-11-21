@@ -16,3 +16,4 @@ src/com/pugh/sockso/templates
 *.~*~
 .*
 bin/
+*.bak

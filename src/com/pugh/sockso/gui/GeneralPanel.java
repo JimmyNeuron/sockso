@@ -213,12 +213,6 @@ public class GeneralPanel extends JPanel implements RequestLogChangeListener {
         builder.nextLine();
         builder.append( locale.getString("gui.label.uploadsDirectory"), new UploadDirectoryOptionField(parent,p,"uploads.collectionId",locale,db,cm) );
         builder.nextLine();
-        
-        builder.appendSeparator( "Last.fm Scrobbling" );
-        builder.append( locale.getString("gui.label.lastfmUsername"), new TextOptionField(p,Constants.LASTFM_USERNAME) );
-        builder.nextLine();
-        builder.append( locale.getString("gui.label.lastfmPassword"), new PasswordOptionField(p,Constants.LASTFM_PASSWORD) );
-        builder.nextLine();
 
         builder.appendSeparator( locale.getString("gui.label.general") );
         builder.append( locale.getString("gui.label.startMinimized"), new BooleanOptionField(p,"app.startMinimized") );

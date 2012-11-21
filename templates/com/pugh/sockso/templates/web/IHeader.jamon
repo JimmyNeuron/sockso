@@ -77,6 +77,7 @@
         <a href="<% properties.getUrl("/browse/latest") #n %>"><% locale.getString("www.link.latest") %></a>
         <a href="<% properties.getUrl("/browse/popular") #n %>"><% locale.getString("www.link.popular") %></a>
         <a href="<% properties.getUrl("/browse/playlists") #n %>"><% locale.getString("www.link.playlists") %></a>
+        <a href="<% properties.getUrl("/browse/stats") #n %>"><% locale.getString("www.link.stats") %></a>
         <a href="javascript:player.play('random')"><% locale.getString("www.link.random") %></a>
     </div>
 

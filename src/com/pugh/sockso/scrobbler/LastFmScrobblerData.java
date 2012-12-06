@@ -49,7 +49,7 @@ public class LastFmScrobblerData
 		}
 		else
 		{
-			this.submissiontime = this.starttime + (trackLength / 2);
+			this.submissiontime = this.starttime + 240;
 		}
 		
 		this.scrobbleData = new ScrobbleData(

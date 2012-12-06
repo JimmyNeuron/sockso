@@ -69,13 +69,7 @@ public class LastFmScrobbler extends Thread implements PropertiesListener
 		}
 		else
 		{
-			session = Authenticator.getMobileSession(
-	                					_properties.get(Constants.LASTFM_USERNAME),
-                						_properties.get(Constants.LASTFM_PASSWORD),
-                						LastFmKey,
-                						LastFmSecret);
-			
-			log.debug("Created new session from shared Last.fm account.");
+			return false;
 		}
 		
 		log.debug("Storing session " + (session == null?"=null ":"with data ") + "in shared sessions.");
